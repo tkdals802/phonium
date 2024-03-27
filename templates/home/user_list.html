@@ -1,0 +1,24 @@
+{% if User_list %}
+    <ul>
+        {% for user in User_list %}
+            <li><a href="{% url 'home:detail' user.id %}">{{ user.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>유저가 없습니다.</p>
+{% endif %}
+
+<form action="{% url 'home:user_create' %}" method="post">
+    {% csrf_token %}
+    <label for="name">이름</label>
+    <input type="text" name="name" id="name">
+    <label for="birth_date">생일</label>
+    <input type="date" name="birth_date" id="birth_date">
+    <label for="sex">성별</label>
+    <select name="sex" id="sex">
+        <option value="M">남자</option>
+        <option value="W">여자</option>
+    </select>
+    <input type="submit" value="유저등록">
+</form>
+

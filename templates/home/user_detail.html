@@ -1,0 +1,18 @@
+<h1>{{ user.birth_date }}</h1>
+<div>
+    {{ user.id }}
+</div>
+<form action="{% url 'home:comment_create' user.id %}" method="post">
+    {% csrf_token %}
+    <textarea name="title" id="title" rows="1"></textarea>
+    <textarea name="content" id="content" rows="15"></textarea>
+    <input type="submit" value="코멘트 등록">
+</form>
+
+{% if Comment_list %}
+    {% for comment in Comment_list %}
+        <li>{{ comment.title }}</li>
+    {% endfor %}
+{% else %}
+    <p>코멘트가 없음</p>
+{% endif %}
