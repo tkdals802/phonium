@@ -1,18 +1,47 @@
-<h1>{{ user.birth_date }}</h1>
-<div>
-    {{ user.id }}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+
+<h3>{{ user.name }}의 comment</h3>
+
+
+    <form action="{% url 'home:comment_create' user.id %}" method="post">
+        {% csrf_token %}
+        <div class="mx-2">
+            <label for="title">제목</label>
+            <input type="text" class="form-control" name="title" id="title" placeholder="Enter title">
+            <label for="content" class="mt-1">내용</label>
+            <textarea class="form-control" name="content" id="content" placeholder="Enter content" rows="10"></textarea>
+            <button type="submit" class="btn btn-danger mt-2">코멘트 등록</button>
+        </div>
+    </form>
 </div>
-<form action="{% url 'home:comment_create' user.id %}" method="post">
-    {% csrf_token %}
-    <textarea name="title" id="title" rows="1"></textarea>
-    <textarea name="content" id="content" rows="15"></textarea>
-    <input type="submit" value="코멘트 등록">
-</form>
 
 {% if Comment_list %}
-    {% for comment in Comment_list %}
-        <li>{{ comment.title }}</li>
-    {% endfor %}
-{% else %}
-    <p>코멘트가 없음</p>
-{% endif %}
+    <p class="card mx-3">{{ Comment_list.count }}개</p>
+    <div class="mx-2">
+        <table class="table">
+            <thead class="table-danger">
+                <th>제목</th>
+                <th>내용</th>
+                <th>작성 날짜</th>
+            </thead>
+            {% for comment in Comment_list %}
+            <tbody>
+            <tr>
+                <td>{{ comment.title }}</td>
+                <td>{{ comment.content }}</td>
+                <td>{{ comment.create_date }}</td>
+            </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+
+    </div>
+    {% else %}
+        <p>코멘트가 없음</p>
+    {% endif %}
+
+
+
+
+

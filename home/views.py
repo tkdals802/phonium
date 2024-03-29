@@ -10,11 +10,11 @@ def index(request):
 
 def detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
-    context = {'Comment_list' : Comment.objects.filter(author_id=user.id)}
+    Comment_list = Comment.objects.filter(author_id=user.id)
+    context = {'user' : user, 'Comment_list' : Comment_list}
     return render(request, 'home/user_detail.html', context)
 
 def comment_create(request,user_id):
-    print(user_id)
     user = get_object_or_404(User, pk=user_id)
     #comment = get_object_or_404(Comment, pk=comment_id)
     user.comment_set.create(
