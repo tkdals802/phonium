@@ -2,7 +2,6 @@
 {% block content %}
 
 <div class="container my-3">
-    {% if User_list %}
     <table class="table">
         <thead class="table-info">
             <tr>
@@ -10,38 +9,24 @@
                 <th scope="col">name</th>
                 <th scope="col">생일</th>
                 <th scope="col">성별</th>
-                <th scope="col">등급</th>
                 <th scope="col"></th>
             </tr>
         </thead>
-        {% for user in User_list %}
+
         <tbody>
             <tr>
-                <td>{{ user.id }}</td>
-                <td><a href="{% url 'home:detail' user.id %}">{{ user.name }}</a></td>
-                <td>{{ user.birth_date }}</a></td>
-                <td>{{ user.sex }}</td>
-                <td>{{ user.level }}</td>
-                <td>
-                    <div class="position-end">
-                        <a class="btn btn-outline-info btn-sm float-end me-3" href="{% url 'home:user_modify' user.id %}"
-                           style="text-decoration:none;color:blue;font-size:small">수정</a>
-                        <a class="btn btn-outline-danger btn-sm float-end mx-2" href="{% url 'home:user_delete' user.id %}"
-                           style="text-decoration:none;color:red;font-size:small">삭제</a>
-                    </div>
-                    <div class="position-end">
-
-                    </div>
-                </td>
+                <td>{{ modify.id }}</td>
+                <td>{{ modify.name }}</a></td>
+                <td>{{ modify.birth_date }}</a></td>
+                <td>{{ modify.sex }}</td>
             </tr>
-        </tbody>
-        {% endfor %}
-    </table>
-    {% else %}
-        <p>유저가 없습니다.</p>
-    {% endif %}
 
-<form action="{% url 'home:user_create' %}" method="post">
+        </tbody>
+
+    </table>
+
+
+<form action="{% url 'home:user_modify2' modify.id %}" method="post">
     {% csrf_token %}
     <div class="form-group">
         <label for="name">이름</label>
@@ -63,7 +48,7 @@
             여자
         </label>
     </div>
-    <button type="submit" class="btn btn-info mb-2">유저등록</button>
+    <button type="submit" class="btn btn-info mb-2">정보수정</button>
 </form>
 
 

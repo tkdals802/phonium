@@ -33,3 +33,40 @@ def user_create(request):
     )
     user.save()
     return redirect('home:index')
+
+def user_delete(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    user.delete()
+    return redirect('home:index')
+
+def comment_delete(request, user_id, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    comment.delete()
+    return redirect('home:detail', user_id=user_id)
+
+def user_modify(request, user_id):
+    user=get_object_or_404(User, pk=user_id)
+    content = {'modify' : user}
+    return render(request, 'home/user_modify.html', content)
+
+def user_modify2(request, user_id):
+    user=get_object_or_404(User, pk=user_id)
+    user.name=request.POST.get('name')
+    birth_date=request.POST.get('birth_date')
+    sex=request.POST.get('sex')
+    user.save()
+    return redirect('home:index')
+
+def comment_modify(request, user_id, comment_id):
+    user = get_object_or_404(User, pk=user_id)
+    comment = get_object_or_404(Comment, pk=comment_id)
+    content = {'user' : user, 'comment' : comment}
+    return render(request, 'home/comment_modify.html', content)
+
+def comment_modify2(request, user_id, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    comment.title = request.POST.get('title')
+    comment.content = request.POST.get('content')
+    comment.create_date = timezone.now()
+    comment.save()
+    return redirect('home:detail', user_id=user_id)

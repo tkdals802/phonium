@@ -1,29 +1,30 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+{% extends 'base.html' %}
+{% block content %}
 
-<h3>{{ user.name }}의 comment</h3>
-
-
-    <form action="{% url 'home:comment_create' user.id %}" method="post">
-        {% csrf_token %}
-        <div class="mx-2">
+<form action="{% url 'home:comment_create' user.id %}" method="post">
+    {% csrf_token %}
+    <div class="mx-2 mt-2">
             <label for="title">제목</label>
             <input type="text" class="form-control" name="title" id="title" placeholder="Enter title">
-            <label for="content" class="mt-1">내용</label>
+
+            <label for="content" class="mt-2">내용</label>
             <textarea class="form-control" name="content" id="content" placeholder="Enter content" rows="10"></textarea>
-            <button type="submit" class="btn btn-danger mt-2">코멘트 등록</button>
+            <button type="submit" class="btn btn-danger my-2">코멘트 등록</button>
         </div>
     </form>
 </div>
 
 {% if Comment_list %}
-    <p class="card mx-3">{{ Comment_list.count }}개</p>
+    <p class="card mx-2 px-2 ">
+        {{ Comment_list.count }}개
+    </p>
     <div class="mx-2">
         <table class="table">
             <thead class="table-danger">
                 <th>제목</th>
                 <th>내용</th>
                 <th>작성 날짜</th>
+                <th> </th>
             </thead>
             {% for comment in Comment_list %}
             <tbody>
@@ -31,6 +32,12 @@
                 <td>{{ comment.title }}</td>
                 <td>{{ comment.content }}</td>
                 <td>{{ comment.create_date }}</td>
+                <td>
+                   <div class="position-end">
+                    <a class="float-end me-3" href="{% url 'home:comment_modify' user.id comment.id %}" style="text-decoration:none;color:blue">수정</a>
+                    <a class="float-end mx-2" href="{% url 'home:comment_delete' user.id comment.id %}" style="text-decoration:none;color:red">삭제</a>
+                    </div>
+                </td>
             </tr>
             </tbody>
             {% endfor %}
@@ -38,10 +45,12 @@
 
     </div>
     {% else %}
-        <p>코멘트가 없음</p>
+        <div class="card my-2 mx-2 py-2 px-2">
+            코멘트가 없음
+        </div>
     {% endif %}
 
-
+{% endblock %}
 
 
 

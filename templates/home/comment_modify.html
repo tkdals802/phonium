@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form action="{% url 'home:comment_modify2' user.id comment.id %}" method="post">
+    {% csrf_token %}
+    <div class="mx-2 mt-2">
+            <label for="title">제목</label>
+            <input type="text" class="form-control" name="title" id="title" placeholder="Enter title">
+
+            <label for="content" class="mt-2">내용</label>
+            <textarea class="form-control" name="content" id="content" placeholder="Enter content" rows="10"></textarea>
+
+            <button type="submit" class="btn btn-danger my-2">코멘트 수정</button>
+    </div>
+</form>
+
+    <div class="mx-2">
+        <table class="table">
+            <thead class="table-danger">
+                <th>이전 제목</th>
+                <th>이전 내용</th>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ comment.title }}</td>
+                <td>{{ comment.content }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
