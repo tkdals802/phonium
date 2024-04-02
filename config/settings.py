@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
+    'common.apps.CommonConfig',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +124,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR/'static',
 ]
+
+LOGIN_REDIRECT_URL = '/'
+
+AUTH_USER_MODEL = 'home.User'
+
+DEBUG = True

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<form action="{% url 'home:comment_create' user.id %}" method="post">
+<form action="{% url 'home:comment_create' User.id %}" method="post">
     {% csrf_token %}
     <div class="mx-2 mt-2">
             <label for="title">제목</label>
@@ -34,8 +34,8 @@
                 <td>{{ comment.create_date }}</td>
                 <td>
                    <div class="position-end">
-                    <a class="float-end me-3" href="{% url 'home:comment_modify' user.id comment.id %}" style="text-decoration:none;color:blue">수정</a>
-                    <a class="float-end mx-2" href="{% url 'home:comment_delete' user.id comment.id %}" style="text-decoration:none;color:red">삭제</a>
+                    <a class="float-end me-3" href="{% url 'home:comment_modify' User.id comment.id %}" style="text-decoration:none;color:blue">수정</a>
+                    <a class="float-end mx-2" href="{% url 'home:comment_delete' User.id comment.id %}" style="text-decoration:none;color:red">삭제</a>
                     </div>
                 </td>
             </tr>

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<form action="{% url 'home:comment_modify2' user.id comment.id %}" method="post">
+<form action="{% url 'home:comment_modify2' User.id comment.id %}" method="post">
     {% csrf_token %}
     <div class="mx-2 mt-2">
             <label for="title">제목</label>

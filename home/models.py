@@ -1,8 +1,10 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
-class User(models.Model):
+class User(AbstractUser):
     gender = [
         ('M','Man'),
         ('W','Woman'),
@@ -13,11 +15,11 @@ class User(models.Model):
         ('professor','교수님'),
         ('god','신'),
     ]
-    name = models.CharField(max_length=20, verbose_name="이름", null=False)
-    join_date = models.DateField(verbose_name="가입날짜", auto_now_add=True)
-    birth_date = models.DateField(verbose_name="생일", null=False)
+    birth_date = models.DateField(verbose_name="생일", default='1111-01-01')
     level = models.CharField(choices=grade, default='junior', max_length=10)
     sex = models.CharField(choices=gender, max_length=1)
+    phone_num = PhoneNumberField(verbose_name="전화번호",unique=True)
+
 
 class Comment(models.Model):
     title = models.CharField(max_length=100, verbose_name="제목", null=False)

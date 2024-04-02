@@ -5,17 +5,17 @@ from django.db.models import Q
 # Create your views here.
 
 def index(request):
-    context = {'User_list' : User.objects.order_by('-join_date')}
+    context = {'User_list' : User.objects.order_by('-date_joined')}
     return render(request, 'home/user_list.html', context)
 
-def detail(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
-    Comment_list = Comment.objects.filter(author_id=user.id)
-    context = {'user' : user, 'Comment_list' : Comment_list}
+def detail(request, User_id):
+    user_obj = get_object_or_404(User, pk=User_id)
+    Comment_list = Comment.objects.filter(author_id=user_obj.id)
+    context = {'User' : user_obj, 'Comment_list' : Comment_list}
     return render(request, 'home/user_detail.html', context)
 
-def comment_create(request,user_id):
-    user = get_object_or_404(User, pk=user_id)
+def comment_create(request, User_id):
+    user = get_object_or_404(User, pk=User_id)
     #comment = get_object_or_404(Comment, pk=comment_id)
     user.comment_set.create(
         title=request.POST.get('title'),
@@ -23,13 +23,14 @@ def comment_create(request,user_id):
         author=user,
         create_date=timezone.now(),
     )
-    return redirect('home:detail', user_id=user.id)
+    return redirect('home:detail', User_id=user.id)
 
 def user_create(request):
     user = User(
-        name=request.POST.get('name'),
+        username=request.POST.get('username'),
         birth_date=request.POST.get('birth_date'),
         sex=request.POST.get('sex'),
+        phone_num=request.POST('phone_num'),
     )
     user.save()
     return redirect('home:index')
@@ -58,9 +59,9 @@ def user_modify2(request, user_id):
     return redirect('home:index')
 
 def comment_modify(request, user_id, comment_id):
-    user = get_object_or_404(User, pk=user_id)
+    user = get_object_or_404(CustomUser, pk=user_id)
     comment = get_object_or_404(Comment, pk=comment_id)
-    content = {'user' : user, 'comment' : comment}
+    content = {'User' : user, 'comment' : comment}
     return render(request, 'home/comment_modify.html', content)
 
 def comment_modify2(request, user_id, comment_id):

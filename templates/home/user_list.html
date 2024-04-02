@@ -14,21 +14,23 @@
                 <th scope="col"></th>
             </tr>
         </thead>
-        {% for user in User_list %}
+        {% for User in User_list %}
         <tbody>
             <tr>
-                <td>{{ user.id }}</td>
-                <td><a href="{% url 'home:detail' user.id %}">{{ user.name }}</a></td>
-                <td>{{ user.birth_date }}</a></td>
-                <td>{{ user.sex }}</td>
-                <td>{{ user.level }}</td>
+                <td>{{ User.id }}</td>
+                <td><a href="{% url 'home:detail' User.id %}">{{ User.username }}</a></td>
+                <td>{{ User.birth_date }}</a></td>
+                <td>{{ User.sex }}</td>
+                <td>{{ User.level }}</td>
                 <td>
+                    {% if user.is_authenticated %}
                     <div class="position-end">
-                        <a class="btn btn-outline-info btn-sm float-end me-3" href="{% url 'home:user_modify' user.id %}"
+                        <a class="btn btn-outline-info btn-sm float-end me-3" href="{% url 'home:user_modify' User.id %}"
                            style="text-decoration:none;color:blue;font-size:small">수정</a>
-                        <a class="btn btn-outline-danger btn-sm float-end mx-2" href="{% url 'home:user_delete' user.id %}"
+                        <a class="btn btn-outline-danger btn-sm float-end mx-2" href="{% url 'home:user_delete' User.id %}"
                            style="text-decoration:none;color:red;font-size:small">삭제</a>
                     </div>
+                    {% endif %}
                     <div class="position-end">
 
                     </div>
@@ -44,8 +46,12 @@
 <form action="{% url 'home:user_create' %}" method="post">
     {% csrf_token %}
     <div class="form-group">
-        <label for="name">이름</label>
-        <input type="text" class="form-control" name="name" id="name" placeholder="Enter name">
+        <label for="username">이름</label>
+        <input type="text" class="form-control" name="username" id="username" placeholder="Enter name">
+    </div>
+    <div class="form-group">
+        <label for="phone_num">전화번호</label>
+        <input type="text" class="form-control" name="phone_num" id="phone_num" placeholder="Enter phone num">
     </div>
     <div class="form-group">
         <label for="birth_date">생일</label>
